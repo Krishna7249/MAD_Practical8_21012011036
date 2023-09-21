@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
         createAlarm.setOnClickListener{
             TimePickerDialog(this,{tp,hour,minute -> setAlarmTime(hour,minute)},11,0,false).show()
         }
+
     }
     fun setAlarmTime(hour:Int,minute:Int){
         //card.visibility= View.GONE
