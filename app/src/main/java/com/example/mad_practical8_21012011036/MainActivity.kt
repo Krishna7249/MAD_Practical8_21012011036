@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.View
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
+import java.util.Calendar
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,30 +23,35 @@ class MainActivity : AppCompatActivity() {
         card.visibility = View.GONE
 
         addAlarm.setOnClickListener {
-            TimePickerDialog(this, {tp, hour, minute -> setAlarmTime(hour, minute)}, 11,0,false).show()
+            TimePickerDialog(this, {tp, hour, minute -> setAlarmTime(hour, minute)}, Calendar.HOUR,Calendar.MINUTE,false).show()
+            card.visibility = View.VISIBLE
         }
+
     }
 
     fun setAlarmTime(hour : Int, minute : Int){
-        //card.visibility = View.VISIBLE
+        val alarmTime = Calendar.getInstance()
+        val year = alarmTime.get(Calendar.YEAR)
+        val month = alarmTime.get(Calendar.MONTH)
+        val date = alarmTime.get(Calendar.DATE)
+        alarmTime.set(year, month, date, hour, minute, 0)
+        setAlarm(alarmTime.timeInMillis, AlarmBroadcastReceiver.ALARMSTART)
     }
 
-    fun setAlarm(millisitime : Long, action : String) {
+    fun stop(){
+        setAlarm(-1,AlarmBroadcastReceiver.ALARMSTOP)
+    }
+    fun setAlarm(millitime : Long, action : String) {
         val intentalarm = Intent(applicationContext, AlarmBroadcastReceiver::class.java)
-        val pendingintent = PendingIntent.getBroadcast(
-            applicationContext,
-            4356,
-            intentalarm,
-            PendingIntent.FLAG_UPDATE_CURRENT
-        )
+        intentalarm.putExtra(AlarmBroadcastReceiver.ALARMKEY,action)
+        val pendingintent = PendingIntent.getBroadcast(applicationContext,4356,intentalarm,PendingIntent.FLAG_UPDATE_CURRENT)
         val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-        // if(str == "Start"){
-        //AlarmManager.RTC_WAKEUP,
-        //millisitime,
-        //pendingintent
-        //}
-        //else if(str == "Stop"){
-          //  alarmManager.cancel(pendingintent)
-        //}
+        if(action == AlarmBroadcastReceiver.ALARMSTART){
+            //alarmManager.setExact(AlarmManager.RTC_WAKEUP,millitime,pendingintent)
+        }
+        else if(action == AlarmBroadcastReceiver.ALARMSTOP){
+            alarmManager.cancel(pendingintent)
+            sendBroadcast(intentalarm)
+        }
     }
 }
