@@ -16,12 +16,10 @@
             android:name=".AlarmService"
             android:enabled="true"
             android:exported="true"></service>
-
         <receiver
             android:name=".AlarmBroadcastReceiver"
             android:enabled="true"
             android:exported="true" />
-
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -32,5 +30,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

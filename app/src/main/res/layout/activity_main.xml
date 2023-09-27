@@ -8,9 +8,7 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="122dp"
-        tools:layout_editor_absoluteY="30dp">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -133,13 +131,12 @@
                             android:text="Set Alarm Time"
                             android:textAppearance="?attr/textAppearanceHeadline6" />
 
-                        <TextClock
-                            android:id="@+id/clocktime1"
+                        <TextView
+                            android:id="@+id/textAlarmTime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_margin="20dp"
-                            android:format12Hour="hh:mm:ss a"
                             android:padding="10dp"
                             android:textAlignment="center"
                             android:textColor="@color/black"
@@ -147,6 +144,7 @@
                             android:textStyle="bold" />
 
                         <com.google.android.material.button.MaterialButton
+                            android:id="@+id/cancel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="8dp"
